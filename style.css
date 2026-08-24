@@ -25,7 +25,7 @@
     --warning: #f59e0b; /* Amber 500 */
     
     /* Elegant soft purple/indigo/teal gradients */
-    --gradient-back: linear-gradient(135deg, #a5b4fc 0%, #818cf8 50%, #6366f1 100%);
+    --gradient-back: linear-gradient(135deg, #a7f3d0 0%, #34d399 100%);
     --gradient-text: linear-gradient(135deg, #6366f1 0%, #06b6d4 100%);
     --gradient-gold: linear-gradient(135deg, #fef08a 0%, #facc15 100%);
     
@@ -435,7 +435,7 @@ header {
 
 .card:hover:not(.flipped):not(.matched) .card-back {
     filter: brightness(1.05);
-    box-shadow: 0 8px 16px rgba(99, 102, 241, 0.25);
+    box-shadow: 0 8px 16px rgba(52, 211, 153, 0.25);
 }
 
 .card.matched .card-inner {
