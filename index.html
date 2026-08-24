@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>เกมจับคู่การ์ดระดับพรีเมียม 🎮 - Ultimate Memory Match</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800&family=Sarabun:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Floating Background Blobs for depth -->
+    <div class="bg-blobs">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+        <div class="blob blob-3"></div>
+    </div>
+
+    <div class="game-container">
+        <!-- Top Toolbar for Controls -->
+        <div class="toolbar">
+            <div class="theme-wrapper">
+                <span class="toolbar-icon">🎨</span>
+                <select id="themeSelect" class="theme-select">
+                    <option value="animals">🐶 ธีมสัตว์โลกน่ารัก</option>
+                    <option value="fruits">🍓 ธีมผลไม้แสนหวาน</option>
+                    <option value="foods">🍔 ธีมขนมของอร่อย</option>
+                    <option value="space">🚀 ธีมอวกาศพิศวง</option>
+                </select>
+            </div>
+            
+            <button id="soundToggleBtn" class="sound-toggle-btn" aria-label="เปิด/ปิดเสียง">
+                <span class="sound-icon" id="soundIcon">🔊</span>
+            </button>
+        </div>
+
+        <!-- Header -->
+        <header>
+            <h1 class="game-title">เกมจับคู่การ์ด</h1>
+            <p class="game-subtitle">ทดสอบความจำของคุณด้วยธีมที่สวยงาม!</p>
+        </header>
+
+        <!-- Stats Panel -->
+        <div class="stats-container">
+            <div class="stat-card">
+                <span class="stat-label">⏱️ เวลาที่ใช้</span>
+                <span class="stat-value" id="timer">00:00</span>
+            </div>
+            <div class="stat-card">
+                <span class="stat-label">🔄 จำนวนครั้ง</span>
+                <span class="stat-value" id="moves">0 ครั้ง</span>
+            </div>
+            <div class="stat-card">
+                <span class="stat-label">🏆 ดีที่สุด (ธีมนี้)</span>
+                <span class="stat-value" id="bestScore">--:--</span>
+            </div>
+        </div>
+
+        <!-- Progress Bar -->
+        <div class="progress-container">
+            <div class="progress-header">
+                <span class="progress-label">🧩 ความสำเร็จ</span>
+                <span class="progress-percentage" id="progressText">0%</span>
+            </div>
+            <div class="progress-track">
+                <div class="progress-fill" id="progressFill"></div>
+            </div>
+        </div>
+
+        <!-- Action Controls -->
+        <div class="controls-container">
+            <button id="restartBtn" class="btn btn-primary">
+                <span>🔄</span> เริ่มเกมใหม่ / สุ่มไพ่
+            </button>
+        </div>
+
+        <!-- Game Board Grid -->
+        <main class="board-wrapper">
+            <!-- Combo Popups will spawn inside here if active -->
+            <div class="combo-indicator" id="comboIndicator">COMBO x0</div>
+            
+            <div class="game-board" id="gameBoard">
+                <!-- Cards will be generated dynamically -->
+            </div>
+        </main>
+
+        <!-- Footer -->
+        <footer>
+            <p>Ultimate Memory Match v2 • สว่างถนอมสายตา ✨</p>
+        </footer>
+    </div>
+
+    <!-- Countdown Memory Overlay (Starts when game restarts) -->
+    <div class="countdown-overlay" id="countdownOverlay">
+        <div class="countdown-content">
+            <div class="countdown-title">จดจำตำแหน่งการ์ด!</div>
+            <div class="countdown-number" id="countdownNumber">3</div>
+            <div class="countdown-bar-track">
+                <div class="countdown-bar-fill" id="countdownBarFill"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Victory Modal Overlay -->
+    <div class="modal-overlay" id="winModal">
+        <div class="modal-content">
+            <div class="modal-icon">🎉</div>
+            <h2 class="modal-title">สุดยอดฝีมือ!</h2>
+            <p class="modal-text">คุณมีความจำที่ยอดเยี่ยม จับคู่ไพ่สำเร็จครบถ้วน!</p>
+            
+            <!-- Star Rating display -->
+            <div class="star-rating-container">
+                <div class="modal-stars" id="modalStars">
+                    <span class="star-icon">★</span>
+                    <span class="star-icon">★</span>
+                    <span class="star-icon">★</span>
+                </div>
+                <div class="star-label-text" id="starRatingLabel">ยอดเยี่ยมที่สุด!</div>
+            </div>
+
+            <!-- Stats Recap -->
+            <div class="modal-stats">
+                <div class="modal-stat-item">
+                    <span class="modal-stat-label">⏱️ เวลาทั้งหมด</span>
+                    <span class="modal-stat-value" id="finalTime">00:00</span>
+                </div>
+                <div class="modal-stat-item">
+                    <span class="modal-stat-label">🔄 จำนวนครั้ง</span>
+                    <span class="modal-stat-value" id="finalMoves">0 ครั้ง</span>
+                </div>
+            </div>
+
+            <div class="new-record-badge" id="newRecordBadge">
+                🔥 สถิติใหม่สำหรับธีมนี้! 🔥
+            </div>
+
+            <button id="playAgainBtn" class="btn btn-success">
+                เล่นอีกรอบ 🎮
+            </button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
